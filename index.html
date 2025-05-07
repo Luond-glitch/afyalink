@@ -5,14 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hospital Management System</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <!-- Login Page -->
-    <div class="login-container" id="loginPage">
-        <div class="login-box">
-            <div class="login-header">
-                <div class="login-logo">
+    <!-- Auth Container (Login/Signup) -->
+    <div class="auth-container" id="authContainer">
+        <div class="auth-box" id="loginBox">
+            <div class="auth-header">
+                <div class="auth-logo">
                     <i class="fas fa-hospital"></i>
                 </div>
                 <h1>Hospital Login</h1>
@@ -28,129 +27,265 @@
                     <input type="password" id="password" placeholder="Enter your password" required>
                 </div>
                 <button type="submit" class="btn btn-primary">Login</button>
+                <button type="button" class="btn btn-secondary" id="showSignupBtn">Create Account</button>
             </form>
-            <div class="forgot-password">
-                <a href="#">Forgot password?</a>
+            <div class="auth-footer">
+                <a href="#" id="forgotPasswordLink">Forgot password?</a>
             </div>
+        </div>
+
+        <div class="auth-box" id="signupBox" style="display: none;">
+            <div class="auth-header">
+                <div class="auth-logo">
+                    <i class="fas fa-hospital"></i>
+                </div>
+                <h1>Create Account</h1>
+                <p>Register your hospital</p>
+            </div>
+            <form id="signupForm">
+                <div class="form-group">
+                    <label for="signupHospitalName">Hospital Name</label>
+                    <input type="text" id="signupHospitalName" placeholder="Enter hospital name" required>
+                </div>
+                <div class="form-group">
+                    <label for="signupEmail">Email</label>
+                    <input type="email" id="signupEmail" placeholder="Enter your email" required>
+                </div>
+                <div class="form-row">
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label for="signupPassword">Password</label>
+                            <input type="password" id="signupPassword" placeholder="Create password" required>
+                        </div>
+                    </div>
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label for="signupConfirmPassword">Confirm Password</label>
+                            <input type="password" id="signupConfirmPassword" placeholder="Confirm password" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="signupContact">Contact Number</label>
+                    <input type="tel" id="signupContact" placeholder="Hospital contact number" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Register Hospital</button>
+                <button type="button" class="btn btn-secondary" id="showLoginBtn">Back to Login</button>
+            </form>
         </div>
     </div>
 
     <!-- Dashboard -->
     <div class="dashboard" id="dashboard">
         <!-- Sidebar -->
-        <div class="sidebar">
+        <div class="sidebar" id="sidebar">
             <div class="sidebar-header">
-                <h2><i class="fas fa-hospital"></i> MedCare</h2>
+                <h2><i class="fas fa-hospital"></i> <span id="sidebarHospitalName">MedCare</span></h2>
             </div>
             <ul class="sidebar-menu">
-                <li><a href="#" class="active"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
-                <li><a href="#"><i class="fas fa-procedures"></i> Bed Management</a></li>
-                <li><a href="#"><i class="fas fa-user-md"></i> Staff</a></li>
-                <li><a href="#"><i class="fas fa-calendar-alt"></i> Appointments</a></li>
-                <li><a href="#"><i class="fas fa-pills"></i> Pharmacy</a></li>
-                <li><a href="#"><i class="fas fa-cog"></i> Settings</a></li>
+                <li><a href="#" class="active" id="dashboardLink"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                <li><a href="#" id="bedsLink"><i class="fas fa-procedures"></i> Bed Management</a></li>
+                <li><a href="#" id="staffLink"><i class="fas fa-user-md"></i> Staff</a></li>
+                <li><a href="#" id="treatmentsLink"><i class="fas fa-stethoscope"></i> Treatments</a></li>
+                <li><a href="#" id="scheduleLink"><i class="fas fa-calendar-alt"></i> Working Hours</a></li>
+                <li><a href="#" id="calendarLink"><i class="fas fa-calendar-day"></i> Calendar</a></li>
+                <li><a href="#" id="settingsLink"><i class="fas fa-cog"></i> Settings</a></li>
             </ul>
         </div>
 
         <!-- Main Content -->
-        <div class="main-content">
+        <div class="main-content" id="mainContent">
             <div class="header">
-                <h2>Hospital Dashboard</h2>
+                <button class="menu-toggle" id="menuToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <h2 id="pageTitle">Dashboard</h2>
                 <div class="user-profile">
                     <img src="https://randomuser.me/api/portraits/women/45.jpg" alt="User">
                     <div>
-                        <div>Dr. Sarah Johnson</div>
+                        <div id="userName">Admin User</div>
                         <button class="logout-btn" id="logoutBtn">Logout</button>
                     </div>
                 </div>
             </div>
 
-            <div class="cards-container">
-                <div class="card">
-                    <div class="card-header">
-                        <div class="card-title">Total Beds</div>
-                        <div class="card-icon bg-teal">
-                            <i class="fas fa-bed"></i>
+            <!-- Dashboard Content -->
+            <div class="dashboard-content" id="dashboardContent">
+                <div class="cards-container">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title">Total Beds</div>
+                            <div class="card-icon bg-teal">
+                                <i class="fas fa-bed"></i>
+                            </div>
                         </div>
+                        <div class="card-value" id="totalBeds">0</div>
+                        <div class="card-description">Hospital bed capacity</div>
                     </div>
-                    <div class="card-value" id="totalBeds">250</div>
-                    <div class="card-description">Hospital bed capacity</div>
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title">Available Beds</div>
+                            <div class="card-icon bg-blue">
+                                <i class="fas fa-procedures"></i>
+                            </div>
+                        </div>
+                        <div class="card-value" id="availableBeds">0</div>
+                        <div class="card-description">Currently available</div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title">Staff Members</div>
+                            <div class="card-icon bg-green">
+                                <i class="fas fa-user-md"></i>
+                            </div>
+                        </div>
+                        <div class="card-value" id="staffCount">0</div>
+                        <div class="card-description">Doctors, nurses & staff</div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title">Treatments Offered</div>
+                            <div class="card-icon bg-orange">
+                                <i class="fas fa-stethoscope"></i>
+                            </div>
+                        </div>
+                        <div class="card-value" id="treatmentsCount">0</div>
+                        <div class="card-description">Medical services available</div>
+                    </div>
                 </div>
-                <div class="card">
-                    <div class="card-header">
-                        <div class="card-title">Available Beds</div>
-                        <div class="card-icon bg-blue">
-                            <i class="fas fa-procedures"></i>
-                        </div>
+
+                <div class="section">
+                    <div class="section-header">
+                        <h3 class="section-title">Hospital Information</h3>
+                        <button class="btn btn-primary btn-sm" id="editHospitalBtn">Edit Information</button>
                     </div>
-                    <div class="card-value" id="availableBeds">78</div>
-                    <div class="card-description">Currently available</div>
-                </div>
-                <div class="card">
-                    <div class="card-header">
-                        <div class="card-title">Staff Members</div>
-                        <div class="card-icon bg-green">
-                            <i class="fas fa-user-md"></i>
-                        </div>
+                    <div class="hospital-info">
+                        <p><strong>Name:</strong> <span id="hospitalName">Loading...</span></p>
+                        <p><strong>Location:</strong> <span id="hospitalLocation">Loading...</span></p>
+                        <p><strong>Status:</strong> <span class="badge" id="hospitalStatus">Loading...</span></p>
+                        <p><strong>Contact:</strong> <span id="hospitalContact">Loading...</span></p>
+                        <p><strong>Working Hours:</strong> <span id="hospitalHours">Loading...</span></p>
                     </div>
-                    <div class="card-value" id="staffCount">145</div>
-                    <div class="card-description">Doctors, nurses & staff</div>
                 </div>
             </div>
 
-            <div class="section">
-                <div class="section-header">
-                    <h3 class="section-title">Hospital Information</h3>
-                    <button class="btn btn-primary btn-sm" id="editHospitalBtn">Edit Information</button>
-                </div>
-                <div class="hospital-info">
-                    <p><strong>Name:</strong> <span id="hospitalName">MedCare General Hospital</span></p>
-                    <p><strong>Location:</strong> <span id="hospitalLocation">123 Medical Drive, Health City</span></p>
-                    <p><strong>Status:</strong> <span class="badge badge-success" id="hospitalStatus">Operational</span></p>
-                    <p><strong>Contact:</strong> <span id="hospitalContact">(555) 123-4567</span></p>
+            <!-- Beds Content -->
+            <div class="beds-content" id="bedsContent" style="display: none;">
+                <div class="section">
+                    <div class="section-header">
+                        <h3 class="section-title">Bed Management</h3>
+                        <button class="btn btn-primary btn-sm" id="addBedBtn">Add Bed</button>
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Ward</th>
+                                <th>Bed Number</th>
+                                <th>Type</th>
+                                <th>Status</th>
+                                <th>Patient</th>
+                                <th>Admission Date</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="bedTableBody">
+                            <!-- Bed data will be inserted here by JavaScript -->
+                        </tbody>
+                    </table>
                 </div>
             </div>
 
-            <div class="section">
-                <div class="section-header">
-                    <h3 class="section-title">Bed Management</h3>
-                    <button class="btn btn-primary btn-sm" id="addBedBtn">Add Bed</button>
+            <!-- Staff Content -->
+            <div class="staff-content" id="staffContent" style="display: none;">
+                <div class="section">
+                    <div class="section-header">
+                        <h3 class="section-title">Staff Members</h3>
+                        <button class="btn btn-primary btn-sm" id="addStaffBtn">Add Staff</button>
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Role</th>
+                                <th>Department</th>
+                                <th>Contact</th>
+                                <th>Working Hours</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="staffTableBody">
+                            <!-- Staff data will be inserted here by JavaScript -->
+                        </tbody>
+                    </table>
                 </div>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Ward</th>
-                            <th>Bed Number</th>
-                            <th>Status</th>
-                            <th>Patient</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody id="bedTableBody">
-                        <!-- Bed data will be inserted here by JavaScript -->
-                    </tbody>
-                </table>
             </div>
 
-            <div class="section">
-                <div class="section-header">
-                    <h3 class="section-title">Staff Members</h3>
-                    <button class="btn btn-primary btn-sm" id="addStaffBtn">Add Staff</button>
+            <!-- Treatments Content -->
+            <div class="treatments-content" id="treatmentsContent" style="display: none;">
+                <div class="section">
+                    <div class="section-header">
+                        <h3 class="section-title">Treatments Offered</h3>
+                        <button class="btn btn-primary btn-sm" id="addTreatmentBtn">Add Treatment</button>
+                    </div>
+                    <div id="treatmentsList">
+                        <!-- Treatments will be listed here -->
+                    </div>
                 </div>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Role</th>
-                            <th>Department</th>
-                            <th>Contact</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody id="staffTableBody">
-                        <!-- Staff data will be inserted here by JavaScript -->
-                    </tbody>
-                </table>
+            </div>
+
+            <!-- Schedule Content -->
+            <div class="schedule-content" id="scheduleContent" style="display: none;">
+                <div class="section">
+                    <div class="section-header">
+                        <h3 class="section-title">Working Hours</h3>
+                        <button class="btn btn-primary btn-sm" id="editHoursBtn">Edit Hours</button>
+                    </div>
+                    <div id="workingHoursDisplay">
+                        <!-- Working hours will be displayed here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Calendar Content -->
+            <div class="calendar-content" id="calendarContent" style="display: none;">
+                <div class="section">
+                    <div class="section-header">
+                        <h3 class="section-title">Hospital Calendar</h3>
+                        <button class="btn btn-primary btn-sm" id="addEventBtn">Add Event</button>
+                    </div>
+                    <div class="calendar" id="calendar">
+                        <div class="calendar-header">
+                            <div class="calendar-nav">
+                                <button id="prevMonth"><i class="fas fa-chevron-left"></i></button>
+                                <button id="nextMonth"><i class="fas fa-chevron-right"></i></button>
+                            </div>
+                            <h3 class="calendar-month" id="calendarMonth">Month Year</h3>
+                        </div>
+                        <div class="calendar-grid" id="calendarGrid">
+                            <!-- Calendar will be generated here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Settings Content -->
+            <div class="settings-content" id="settingsContent" style="display: none;">
+                <div class="section">
+                    <div class="section-header">
+                        <h3 class="section-title">Hospital Settings</h3>
+                    </div>
+                    <div class="form-group">
+                        <label>USSD Code</label>
+                        <input type="text" id="ussdCode" value="*123#" readonly>
+                        <small>Patients can dial this code to access hospital information</small>
+                    </div>
+                    <div class="form-group">
+                        <label>API Key</label>
+                        <input type="text" id="apiKey" value="hsp_1234567890abcdef" readonly>
+                        <small>Use this key to connect your mobile app</small>
+                    </div>
+                    <button class="btn btn-primary" id="regenerateApiKey">Regenerate API Key</button>
+                </div>
             </div>
         </div>
     </div>
@@ -218,17 +353,37 @@
                         </div>
                     </div>
                 </div>
-                <div class="form-group">
-                    <label for="bedStatus">Status</label>
-                    <select id="bedStatus" required>
-                        <option value="Available">Available</option>
-                        <option value="Occupied">Occupied</option>
-                        <option value="Maintenance">Maintenance</option>
-                    </select>
+                <div class="form-row">
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label for="bedType">Bed Type</label>
+                            <select id="bedType" required>
+                                <option value="Standard">Standard</option>
+                                <option value="ICU">ICU</option>
+                                <option value="Pediatric">Pediatric</option>
+                                <option value="Maternity">Maternity</option>
+                                <option value="Isolation">Isolation</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label for="bedStatus">Status</label>
+                            <select id="bedStatus" required>
+                                <option value="Available">Available</option>
+                                <option value="Occupied">Occupied</option>
+                                <option value="Maintenance">Maintenance</option>
+                            </select>
+                        </div>
+                    </div>
                 </div>
                 <div class="form-group" id="patientInfoGroup">
                     <label for="patientName">Patient Name</label>
                     <input type="text" id="patientName">
+                </div>
+                <div class="form-group" id="admissionDateGroup">
+                    <label for="admissionDate">Admission Date</label>
+                    <input type="date" id="admissionDate">
                 </div>
                 <button type="submit" class="btn btn-primary">Save Bed</button>
             </form>
@@ -283,64 +438,281 @@
                         </div>
                     </div>
                 </div>
+                <div class="form-group">
+                    <label>Working Hours</label>
+                    <div class="time-inputs">
+                        <select id="workStartHour">
+                            <option value="08">08</option>
+                            <option value="09">09</option>
+                            <option value="10">10</option>
+                        </select>
+                        <span>:</span>
+                        <select id="workStartMinute">
+                            <option value="00">00</option>
+                            <option value="30">30</option>
+                        </select>
+                        <span>to</span>
+                        <select id="workEndHour">
+                            <option value="16">16</option>
+                            <option value="17">17</option>
+                            <option value="18">18</option>
+                        </select>
+                        <span>:</span>
+                        <select id="workEndMinute">
+                            <option value="00">00</option>
+                            <option value="30">30</option>
+                        </select>
+                    </div>
+                </div>
                 <button type="submit" class="btn btn-primary">Add Staff</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add Treatment Modal -->
+    <div class="form-modal" id="treatmentModal">
+        <div class="form-modal-content">
+            <span class="close-modal" id="closeTreatmentModal">&times;</span>
+            <h2>Add Treatment</h2>
+            <form id="treatmentForm">
+                <div class="form-group">
+                    <label for="treatmentName">Treatment Name</label>
+                    <input type="text" id="treatmentName" placeholder="e.g., X-Ray, Blood Test" required>
+                </div>
+                <div class="form-group">
+                    <label for="treatmentDepartment">Department</label>
+                    <select id="treatmentDepartment" required>
+                        <option value="General">General</option>
+                        <option value="Radiology">Radiology</option>
+                        <option value="Laboratory">Laboratory</option>
+                        <option value="Surgery">Surgery</option>
+                        <option value="Emergency">Emergency</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="treatmentDescription">Description</label>
+                    <textarea id="treatmentDescription" rows="3"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Add Treatment</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Edit Working Hours Modal -->
+    <div class="form-modal" id="hoursModal">
+        <div class="form-modal-content">
+            <span class="close-modal" id="closeHoursModal">&times;</span>
+            <h2>Edit Working Hours</h2>
+            <form id="hoursForm">
+                <div class="form-group">
+                    <label>Regular Hours</label>
+                    <div class="time-inputs">
+                        <select id="openHour">
+                            <option value="08">08</option>
+                            <option value="09">09</option>
+                        </select>
+                        <span>:</span>
+                        <select id="openMinute">
+                            <option value="00">00</option>
+                        </select>
+                        <span>to</span>
+                        <select id="closeHour">
+                            <option value="17">17</option>
+                            <option value="18">18</option>
+                        </select>
+                        <span>:</span>
+                        <select id="closeMinute">
+                            <option value="00">00</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Emergency Hours</label>
+                    <div class="time-inputs">
+                        <input type="text" value="24/7" readonly>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="workingDays">Working Days</label>
+                    <select id="workingDays" multiple>
+                        <option value="Monday" selected>Monday</option>
+                        <option value="Tuesday" selected>Tuesday</option>
+                        <option value="Wednesday" selected>Wednesday</option>
+                        <option value="Thursday" selected>Thursday</option>
+                        <option value="Friday" selected>Friday</option>
+                        <option value="Saturday">Saturday</option>
+                        <option value="Sunday">Sunday</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Save Hours</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add Event Modal -->
+    <div class="form-modal" id="eventModal">
+        <div class="form-modal-content">
+            <span class="close-modal" id="closeEventModal">&times;</span>
+            <h2>Add Calendar Event</h2>
+            <form id="eventForm">
+                <div class="form-group">
+                    <label for="eventTitle">Event Title</label>
+                    <input type="text" id="eventTitle" required>
+                </div>
+                <div class="form-row">
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label for="eventDate">Date</label>
+                            <input type="date" id="eventDate" required>
+                        </div>
+                    </div>
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label for="eventTime">Time</label>
+                            <input type="time" id="eventTime" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="eventDescription">Description</label>
+                    <textarea id="eventDescription" rows="3"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Add Event</button>
             </form>
         </div>
     </div>
 
     <script>
         // Sample data for demonstration
-        const bedData = [
-            { ward: "General", number: "101", status: "Occupied", patient: "John Smith" },
-            { ward: "ICU", number: "201", status: "Occupied", patient: "Mary Johnson" },
-            { ward: "Pediatrics", number: "301", status: "Available", patient: "" },
-            { ward: "Maternity", number: "401", status: "Occupied", patient: "Lisa Brown" },
-            { ward: "Surgical", number: "501", status: "Maintenance", patient: "" }
+        let hospitalData = {
+            name: "MedCare General Hospital",
+            location: "123 Medical Drive, Health City",
+            status: "Operational",
+            contact: "(555) 123-4567",
+            workingHours: "8:00 AM - 5:00 PM (Mon-Fri)",
+            ussdCode: "*123#",
+            apiKey: "hsp_1234567890abcdef"
+        };
+
+        let bedData = [
+            { ward: "General", number: "101", type: "Standard", status: "Occupied", patient: "John Smith", admissionDate: "2023-05-15" },
+            { ward: "ICU", number: "201", type: "ICU", status: "Occupied", patient: "Mary Johnson", admissionDate: "2023-05-10" },
+            { ward: "Pediatrics", number: "301", type: "Pediatric", status: "Available", patient: "", admissionDate: "" },
+            { ward: "Maternity", number: "401", type: "Maternity", status: "Occupied", patient: "Lisa Brown", admissionDate: "2023-05-12" },
+            { ward: "Surgical", number: "501", type: "Standard", status: "Maintenance", patient: "", admissionDate: "" }
         ];
 
-        const staffData = [
-            { name: "Dr. Robert Chen", role: "Doctor", department: "Cardiology", contact: "(555) 123-4567" },
+        let staffData = [
+            { name: "Dr. Robert Chen", role: "Doctor", department: "Cardiology", contact: "(555) 123-4567", hours: "9:00 AM - 5:00 PM" },
+            { name: "Nurse Sarah Williams", role: "Nurse", department: "Emergency", contact: "(555) 234-5678", hours: "8:00 AM - 4:00 PM" },
+            { name: "Dr. Michael Johnson", role: "Doctor", department: "Surgery", contact: "(555) 345-6789", hours: "10:00 AM - 6:00 PM" },
+            { name: "Administrator Emily Davis", role: "Administrator", department: "Administration", contact: "(555) 456-7890", hours: "8:00 AM - 5:00 PM" },
+            { name: "Technician David Wilson", role: "Technician", department: "Radiology", contact: "(555) 567-8901", hours: "9:00 AM - 5:00 PM" }
         ];
+
+        let treatmentsData = [
+            { name: "X-Ray", department: "Radiology", description: "Diagnostic imaging procedure" },
+            { name: "Blood Test", department: "Laboratory", description: "Complete blood count and analysis" },
+            { name: "MRI Scan", department: "Radiology", description: "Magnetic resonance imaging" },
+            { name: "Physical Therapy", department: "Rehabilitation", description: "Therapeutic exercises and treatments" }
+        ];
+
+        let calendarEvents = [
+            { title: "Staff Meeting", date: "2023-06-15", time: "14:00", description: "Monthly staff meeting" },
+            { title: "Equipment Maintenance", date: "2023-06-20", time: "09:00", description: "Radiology equipment servicing" }
+        ];
+
+        // Current view state
+        let currentView = 'dashboard';
+        let currentMonth = new Date().getMonth();
+        let currentYear = new Date().getFullYear();
 
         // DOM Elements
-        const loginPage = document.getElementById('loginPage');
+        const authContainer = document.getElementById('authContainer');
         const dashboard = document.getElementById('dashboard');
+        const loginBox = document.getElementById('loginBox');
+        const signupBox = document.getElementById('signupBox');
         const loginForm = document.getElementById('loginForm');
+        const signupForm = document.getElementById('signupForm');
+        const showSignupBtn = document.getElementById('showSignupBtn');
+        const showLoginBtn = document.getElementById('showLoginBtn');
         const logoutBtn = document.getElementById('logoutBtn');
-        const editHospitalBtn = document.getElementById('editHospitalBtn');
-        const addBedBtn = document.getElementById('addBedBtn');
-        const addStaffBtn = document.getElementById('addStaffBtn');
-        const hospitalModal = document.getElementById('hospitalModal');
-        const bedModal = document.getElementById('bedModal');
-        const staffModal = document.getElementById('staffModal');
-        const closeHospitalModal = document.getElementById('closeHospitalModal');
-        const closeBedModal = document.getElementById('closeBedModal');
-        const closeStaffModal = document.getElementById('closeStaffModal');
-        const hospitalForm = document.getElementById('hospitalForm');
-        const bedForm = document.getElementById('bedForm');
-        const staffForm = document.getElementById('staffForm');
-        const bedTableBody = document.getElementById('bedTableBody');
-        const staffTableBody = document.getElementById('staffTableBody');
-        const bedStatus = document.getElementById('bedStatus');
-        const patientInfoGroup = document.getElementById('patientInfoGroup');
+        const menuToggle = document.getElementById('menuToggle');
+        const sidebar = document.getElementById('sidebar');
+        const mainContent = document.getElementById('mainContent');
+
+        // Navigation links
+        const navLinks = {
+            dashboard: document.getElementById('dashboardLink'),
+            beds: document.getElementById('bedsLink'),
+            staff: document.getElementById('staffLink'),
+            treatments: document.getElementById('treatmentsLink'),
+            schedule: document.getElementById('scheduleLink'),
+            calendar: document.getElementById('calendarLink'),
+            settings: document.getElementById('settingsLink')
+        };
+
+        // Content sections
+        const contentSections = {
+            dashboard: document.getElementById('dashboardContent'),
+            beds: document.getElementById('bedsContent'),
+            staff: document.getElementById('staffContent'),
+            treatments: document.getElementById('treatmentsContent'),
+            schedule: document.getElementById('scheduleContent'),
+            calendar: document.getElementById('calendarContent'),
+            settings: document.getElementById('settingsContent')
+        };
+
+        // Page title
+        const pageTitle = document.getElementById('pageTitle');
 
         // Initialize the app
         function initApp() {
+            setupEventListeners();
+            loadHospitalData();
             renderBedTable();
             renderStaffTable();
-            setupEventListeners();
+            renderTreatments();
+            renderWorkingHours();
+            generateCalendar();
+        }
+
+        // Load hospital data
+        function loadHospitalData() {
+            document.getElementById('hospitalName').textContent = hospitalData.name;
+            document.getElementById('hospitalLocation').textContent = hospitalData.location;
+            document.getElementById('hospitalStatus').textContent = hospitalData.status;
+            document.getElementById('hospitalContact').textContent = hospitalData.contact;
+            document.getElementById('hospitalHours').textContent = hospitalData.workingHours;
+            document.getElementById('sidebarHospitalName').textContent = hospitalData.name;
+            document.getElementById('ussdCode').value = hospitalData.ussdCode;
+            document.getElementById('apiKey').value = hospitalData.apiKey;
+
+            // Update status badge
+            const statusBadge = document.getElementById('hospitalStatus');
+            statusBadge.className = 'badge ' + getStatusBadgeClass(hospitalData.status);
+
+            // Update card counts
+            document.getElementById('totalBeds').textContent = bedData.length;
+            document.getElementById('availableBeds').textContent = bedData.filter(bed => bed.status === 'Available').length;
+            document.getElementById('staffCount').textContent = staffData.length;
+            document.getElementById('treatmentsCount').textContent = treatmentsData.length;
         }
 
         // Render bed table
         function renderBedTable() {
+            const bedTableBody = document.getElementById('bedTableBody');
             bedTableBody.innerHTML = '';
+            
             bedData.forEach((bed, index) => {
                 const row = document.createElement('tr');
                 row.innerHTML = `
                     <td>${bed.ward}</td>
                     <td>${bed.number}</td>
+                    <td>${bed.type}</td>
                     <td><span class="badge ${getStatusBadgeClass(bed.status)}">${bed.status}</span></td>
                     <td>${bed.patient || '-'}</td>
+                    <td>${bed.admissionDate || '-'}</td>
                     <td>
                         <button class="btn btn-primary btn-sm" onclick="editBed(${index})">Edit</button>
                         <button class="btn btn-danger btn-sm" onclick="deleteBed(${index})">Delete</button>
@@ -348,12 +720,15 @@
                 `;
                 bedTableBody.appendChild(row);
             });
+            
             updateBedCounts();
         }
 
         // Render staff table
         function renderStaffTable() {
+            const staffTableBody = document.getElementById('staffTableBody');
             staffTableBody.innerHTML = '';
+            
             staffData.forEach((staff, index) => {
                 const row = document.createElement('tr');
                 row.innerHTML = `
@@ -361,6 +736,7 @@
                     <td>${staff.role}</td>
                     <td>${staff.department}</td>
                     <td>${staff.contact}</td>
+                    <td>${staff.hours}</td>
                     <td>
                         <button class="btn btn-primary btn-sm" onclick="editStaff(${index})">Edit</button>
                         <button class="btn btn-danger btn-sm" onclick="deleteStaff(${index})">Delete</button>
@@ -368,7 +744,115 @@
                 `;
                 staffTableBody.appendChild(row);
             });
+            
             document.getElementById('staffCount').textContent = staffData.length;
+        }
+
+        // Render treatments list
+        function renderTreatments() {
+            const treatmentsList = document.getElementById('treatmentsList');
+            treatmentsList.innerHTML = '';
+            
+            if (treatmentsData.length === 0) {
+                treatmentsList.innerHTML = '<p>No treatments added yet.</p>';
+                return;
+            }
+            
+            treatmentsData.forEach((treatment, index) => {
+                const treatmentItem = document.createElement('div');
+                treatmentItem.className = 'treatment-item';
+                treatmentItem.innerHTML = `
+                    <div><strong>${treatment.name}</strong> (${treatment.department})</div>
+                    <div>${treatment.description}</div>
+                    <button onclick="deleteTreatment(${index})"><i class="fas fa-trash"></i></button>
+                `;
+                treatmentsList.appendChild(treatmentItem);
+            });
+            
+            document.getElementById('treatmentsCount').textContent = treatmentsData.length;
+        }
+
+        // Render working hours
+        function renderWorkingHours() {
+            const hoursDisplay = document.getElementById('workingHoursDisplay');
+            hoursDisplay.innerHTML = `
+                <p><strong>Regular Hours:</strong> ${hospitalData.workingHours}</p>
+                <p><strong>Emergency Services:</strong> 24/7</p>
+            `;
+        }
+
+        // Generate calendar
+        function generateCalendar() {
+            const calendarMonth = document.getElementById('calendarMonth');
+            const calendarGrid = document.getElementById('calendarGrid');
+            
+            // Set month header
+            const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+            calendarMonth.textContent = `${monthNames[currentMonth]} ${currentYear}`;
+            
+            // Clear previous calendar
+            calendarGrid.innerHTML = '';
+            
+            // Add day headers
+            const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+            dayNames.forEach(day => {
+                const dayHeader = document.createElement('div');
+                dayHeader.className = 'calendar-day-header';
+                dayHeader.textContent = day;
+                calendarGrid.appendChild(dayHeader);
+            });
+            
+            // Get first day of month and total days
+            const firstDay = new Date(currentYear, currentMonth, 1).getDay();
+            const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+            
+            // Add empty cells for days before first day
+            for (let i = 0; i < firstDay; i++) {
+                const emptyDay = document.createElement('div');
+                emptyDay.className = 'calendar-day empty';
+                calendarGrid.appendChild(emptyDay);
+            }
+            
+            // Add days of month
+            const today = new Date();
+            const isCurrentMonth = today.getMonth() === currentMonth && today.getFullYear() === currentYear;
+            
+            for (let day = 1; day <= daysInMonth; day++) {
+                const dayElement = document.createElement('div');
+                dayElement.className = 'calendar-day';
+                
+                // Highlight today
+                if (isCurrentMonth && day === today.getDate()) {
+                    dayElement.classList.add('today');
+                }
+                
+                // Add day number
+                const dayNumber = document.createElement('div');
+                dayNumber.className = 'calendar-day-number';
+                dayNumber.textContent = day;
+                dayElement.appendChild(dayNumber);
+                
+                // Add events for this day
+                const dateStr = `${currentYear}-${String(currentMonth + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+                const dayEvents = calendarEvents.filter(event => event.date === dateStr);
+                
+                if (dayEvents.length > 0) {
+                    const eventsContainer = document.createElement('div');
+                    eventsContainer.className = 'calendar-day-events';
+                    
+                    dayEvents.forEach(event => {
+                        const eventElement = document.createElement('div');
+                        eventElement.className = 'calendar-event';
+                        eventElement.textContent = event.title;
+                        eventElement.title = `${event.time} - ${event.description}`;
+                        eventsContainer.appendChild(eventElement);
+                    });
+                    
+                    dayElement.appendChild(eventsContainer);
+                }
+                
+                calendarGrid.appendChild(dayElement);
+            }
         }
 
         // Update bed counts
@@ -383,14 +867,49 @@
         function getStatusBadgeClass(status) {
             switch(status) {
                 case 'Available': return 'badge-success';
+                case 'Operational': return 'badge-success';
                 case 'Occupied': return 'badge-warning';
+                case 'Under Maintenance': return 'badge-danger';
                 case 'Maintenance': return 'badge-danger';
-                default: return 'badge-success';
+                default: return 'badge-info';
+            }
+        }
+
+        // Switch between login and signup
+        function toggleAuthForms() {
+            loginBox.style.display = loginBox.style.display === 'none' ? 'block' : 'none';
+            signupBox.style.display = signupBox.style.display === 'none' ? 'block' : 'none';
+        }
+
+        // Switch between content sections
+        function switchView(view) {
+            currentView = view;
+            
+            // Update active nav link
+            Object.values(navLinks).forEach(link => link.classList.remove('active'));
+            navLinks[view].classList.add('active');
+            
+            // Hide all content sections
+            Object.values(contentSections).forEach(section => section.style.display = 'none');
+            
+            // Show selected content section
+            contentSections[view].style.display = 'block';
+            
+            // Update page title
+            pageTitle.textContent = navLinks[view].textContent;
+            
+            // Special handling for calendar view
+            if (view === 'calendar') {
+                generateCalendar();
             }
         }
 
         // Setup event listeners
         function setupEventListeners() {
+            // Auth form toggles
+            showSignupBtn.addEventListener('click', toggleAuthForms);
+            showLoginBtn.addEventListener('click', toggleAuthForms);
+            
             // Login form
             loginForm.addEventListener('submit', function(e) {
                 e.preventDefault();
@@ -399,133 +918,310 @@
                 
                 // Simple validation (in a real app, this would be server-side)
                 if(email && password) {
-                    loginPage.style.display = 'none';
+                    authContainer.style.display = 'none';
                     dashboard.style.display = 'block';
+                    loadHospitalData();
                 }
             });
-
+            
+            // Signup form
+            signupForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const hospitalName = document.getElementById('signupHospitalName').value;
+                const email = document.getElementById('signupEmail').value;
+                const password = document.getElementById('signupPassword').value;
+                const confirmPassword = document.getElementById('signupConfirmPassword').value;
+                const contact = document.getElementById('signupContact').value;
+                
+                // Validate passwords match
+                if (password !== confirmPassword) {
+                    alert('Passwords do not match!');
+                    return;
+                }
+                
+                // In a real app, this would send data to server
+                hospitalData = {
+                    name: hospitalName,
+                    location: "",
+                    status: "Operational",
+                    contact: contact,
+                    workingHours: "8:00 AM - 5:00 PM (Mon-Fri)",
+                    ussdCode: "*" + Math.floor(100 + Math.random() * 900) + "#",
+                    apiKey: "hsp_" + Math.random().toString(36).substring(2, 18)
+                };
+                
+                authContainer.style.display = 'none';
+                dashboard.style.display = 'block';
+                loadHospitalData();
+                
+                // Show welcome message
+                alert(`Hospital ${hospitalName} registered successfully!\n\nUSSD Code: ${hospitalData.ussdCode}\nAPI Key: ${hospitalData.apiKey}`);
+            });
+            
             // Logout button
             logoutBtn.addEventListener('click', function() {
                 if(confirm('Are you sure you want to logout?')) {
                     dashboard.style.display = 'none';
-                    loginPage.style.display = 'flex';
+                    authContainer.style.display = 'flex';
+                    loginBox.style.display = 'block';
+                    signupBox.style.display = 'none';
                     loginForm.reset();
                 }
             });
-
+            
+            // Menu toggle for mobile
+            menuToggle.addEventListener('click', function() {
+                sidebar.classList.toggle('active');
+            });
+            
+            // Navigation links
+            Object.entries(navLinks).forEach(([view, link]) => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    switchView(view);
+                });
+            });
+            
             // Edit hospital info
-            editHospitalBtn.addEventListener('click', function() {
+            document.getElementById('editHospitalBtn').addEventListener('click', function() {
                 // Fill form with current data
-                document.getElementById('modalHospitalName').value = document.getElementById('hospitalName').textContent;
-                document.getElementById('modalHospitalLocation').value = document.getElementById('hospitalLocation').textContent;
-                document.getElementById('modalHospitalStatus').value = document.getElementById('hospitalStatus').textContent;
-                document.getElementById('modalHospitalContact').value = document.getElementById('hospitalContact').textContent;
-                hospitalModal.style.display = 'flex';
+                document.getElementById('modalHospitalName').value = hospitalData.name;
+                document.getElementById('modalHospitalLocation').value = hospitalData.location;
+                document.getElementById('modalHospitalStatus').value = hospitalData.status;
+                document.getElementById('modalHospitalContact').value = hospitalData.contact;
+                document.getElementById('hospitalModal').style.display = 'flex';
             });
-
+            
             // Add bed button
-            addBedBtn.addEventListener('click', function() {
-                bedForm.reset();
-                bedModal.style.display = 'flex';
+            document.getElementById('addBedBtn').addEventListener('click', function() {
+                document.getElementById('bedForm').reset();
+                document.getElementById('bedModal').style.display = 'flex';
             });
-
+            
             // Add staff button
-            addStaffBtn.addEventListener('click', function() {
-                staffForm.reset();
-                staffModal.style.display = 'flex';
+            document.getElementById('addStaffBtn').addEventListener('click', function() {
+                document.getElementById('staffForm').reset();
+                document.getElementById('staffModal').style.display = 'flex';
             });
-
+            
+            // Add treatment button
+            document.getElementById('addTreatmentBtn').addEventListener('click', function() {
+                document.getElementById('treatmentForm').reset();
+                document.getElementById('treatmentModal').style.display = 'flex';
+            });
+            
+            // Edit working hours button
+            document.getElementById('editHoursBtn').addEventListener('click', function() {
+                document.getElementById('hoursModal').style.display = 'flex';
+            });
+            
+            // Add event button
+            document.getElementById('addEventBtn').addEventListener('click', function() {
+                document.getElementById('eventForm').reset();
+                document.getElementById('eventModal').style.display = 'flex';
+            });
+            
+            // Regenerate API key
+            document.getElementById('regenerateApiKey').addEventListener('click', function() {
+                if(confirm('Are you sure you want to regenerate the API key? Existing apps using the old key will stop working.')) {
+                    hospitalData.apiKey = "hsp_" + Math.random().toString(36).substring(2, 18);
+                    document.getElementById('apiKey').value = hospitalData.apiKey;
+                    alert('New API Key generated: ' + hospitalData.apiKey);
+                }
+            });
+            
+            // Calendar navigation
+            document.getElementById('prevMonth').addEventListener('click', function() {
+                currentMonth--;
+                if (currentMonth < 0) {
+                    currentMonth = 11;
+                    currentYear--;
+                }
+                generateCalendar();
+            });
+            
+            document.getElementById('nextMonth').addEventListener('click', function() {
+                currentMonth++;
+                if (currentMonth > 11) {
+                    currentMonth = 0;
+                    currentYear++;
+                }
+                generateCalendar();
+            });
+            
             // Close modals
-            closeHospitalModal.addEventListener('click', function() {
-                hospitalModal.style.display = 'none';
+            document.getElementById('closeHospitalModal').addEventListener('click', function() {
+                document.getElementById('hospitalModal').style.display = 'none';
             });
-
-            closeBedModal.addEventListener('click', function() {
-                bedModal.style.display = 'none';
+            
+            document.getElementById('closeBedModal').addEventListener('click', function() {
+                document.getElementById('bedModal').style.display = 'none';
             });
-
-            closeStaffModal.addEventListener('click', function() {
-                staffModal.style.display = 'none';
+            
+            document.getElementById('closeStaffModal').addEventListener('click', function() {
+                document.getElementById('staffModal').style.display = 'none';
             });
-
+            
+            document.getElementById('closeTreatmentModal').addEventListener('click', function() {
+                document.getElementById('treatmentModal').style.display = 'none';
+            });
+            
+            document.getElementById('closeHoursModal').addEventListener('click', function() {
+                document.getElementById('hoursModal').style.display = 'none';
+            });
+            
+            document.getElementById('closeEventModal').addEventListener('click', function() {
+                document.getElementById('eventModal').style.display = 'none';
+            });
+            
             // Hospital form submit
-            hospitalForm.addEventListener('submit', function(e) {
+            document.getElementById('hospitalForm').addEventListener('submit', function(e) {
                 e.preventDefault();
-                document.getElementById('hospitalName').textContent = document.getElementById('modalHospitalName').value;
-                document.getElementById('hospitalLocation').textContent = document.getElementById('modalHospitalLocation').value;
-                document.getElementById('hospitalStatus').textContent = document.getElementById('modalHospitalStatus').value;
-                document.getElementById('hospitalContact').textContent = document.getElementById('modalHospitalContact').value;
+                hospitalData = {
+                    ...hospitalData,
+                    name: document.getElementById('modalHospitalName').value,
+                    location: document.getElementById('modalHospitalLocation').value,
+                    status: document.getElementById('modalHospitalStatus').value,
+                    contact: document.getElementById('modalHospitalContact').value
+                };
                 
-                // Update status badge
-                const status = document.getElementById('modalHospitalStatus').value;
-                const statusBadge = document.getElementById('hospitalStatus');
-                statusBadge.className = 'badge ' + getStatusBadgeClass(status);
-                
-                hospitalModal.style.display = 'none';
+                loadHospitalData();
+                document.getElementById('hospitalModal').style.display = 'none';
                 alert('Hospital information updated successfully!');
             });
-
+            
             // Bed form submit
-            bedForm.addEventListener('submit', function(e) {
+            document.getElementById('bedForm').addEventListener('submit', function(e) {
                 e.preventDefault();
                 const newBed = {
                     ward: document.getElementById('bedWard').value,
                     number: document.getElementById('bedNumber').value,
+                    type: document.getElementById('bedType').value,
                     status: document.getElementById('bedStatus').value,
-                    patient: document.getElementById('bedStatus').value === 'Occupied' ? document.getElementById('patientName').value : ''
+                    patient: document.getElementById('bedStatus').value === 'Occupied' ? document.getElementById('patientName').value : '',
+                    admissionDate: document.getElementById('bedStatus').value === 'Occupied' ? document.getElementById('admissionDate').value : ''
                 };
                 
                 bedData.push(newBed);
                 renderBedTable();
-                bedModal.style.display = 'none';
+                document.getElementById('bedModal').style.display = 'none';
                 alert('Bed added successfully!');
             });
-
+            
             // Staff form submit
-            staffForm.addEventListener('click', function(e) {
+            document.getElementById('staffForm').addEventListener('submit', function(e) {
                 e.preventDefault();
+                const startHour = document.getElementById('workStartHour').value;
+                const startMinute = document.getElementById('workStartMinute').value;
+                const endHour = document.getElementById('workEndHour').value;
+                const endMinute = document.getElementById('workEndMinute').value;
+                
                 const newStaff = {
                     name: document.getElementById('staffName').value,
                     role: document.getElementById('staffRole').value,
                     department: document.getElementById('staffDepartment').value,
-                    contact: document.getElementById('staffContact').value
+                    contact: document.getElementById('staffContact').value,
+                    hours: `${startHour}:${startMinute} - ${endHour}:${endMinute}`
                 };
                 
                 staffData.push(newStaff);
                 renderStaffTable();
-                staffModal.style.display = 'none';
+                document.getElementById('staffModal').style.display = 'none';
                 alert('Staff member added successfully!');
             });
-
+            
+            // Treatment form submit
+            document.getElementById('treatmentForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const newTreatment = {
+                    name: document.getElementById('treatmentName').value,
+                    department: document.getElementById('treatmentDepartment').value,
+                    description: document.getElementById('treatmentDescription').value
+                };
+                
+                treatmentsData.push(newTreatment);
+                renderTreatments();
+                document.getElementById('treatmentModal').style.display = 'none';
+                alert('Treatment added successfully!');
+            });
+            
+            // Hours form submit
+            document.getElementById('hoursForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const openHour = document.getElementById('openHour').value;
+                const openMinute = document.getElementById('openMinute').value;
+                const closeHour = document.getElementById('closeHour').value;
+                const closeMinute = document.getElementById('closeMinute').value;
+                
+                const workingDays = Array.from(document.getElementById('workingDays').selectedOptions)
+                    .map(option => option.value);
+                
+                hospitalData.workingHours = `${openHour}:${openMinute} - ${closeHour}:${closeMinute} (${workingDays.join(', ')})`;
+                renderWorkingHours();
+                document.getElementById('hoursModal').style.display = 'none';
+                alert('Working hours updated successfully!');
+            });
+            
+            // Event form submit
+            document.getElementById('eventForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const newEvent = {
+                    title: document.getElementById('eventTitle').value,
+                    date: document.getElementById('eventDate').value,
+                    time: document.getElementById('eventTime').value,
+                    description: document.getElementById('eventDescription').value
+                };
+                
+                calendarEvents.push(newEvent);
+                generateCalendar();
+                document.getElementById('eventModal').style.display = 'none';
+                alert('Event added successfully!');
+            });
+            
             // Show/hide patient info based on bed status
-            bedStatus.addEventListener('change', function() {
+            document.getElementById('bedStatus').addEventListener('change', function() {
+                const patientInfoGroup = document.getElementById('patientInfoGroup');
+                const admissionDateGroup = document.getElementById('admissionDateGroup');
+                
                 if(this.value === 'Occupied') {
                     patientInfoGroup.style.display = 'block';
+                    admissionDateGroup.style.display = 'block';
                 } else {
                     patientInfoGroup.style.display = 'none';
+                    admissionDateGroup.style.display = 'none';
                 }
             });
-
+            
             // Close modal when clicking outside
             window.addEventListener('click', function(e) {
-                if(e.target === hospitalModal) {
-                    hospitalModal.style.display = 'none';
-                }
-                if(e.target === bedModal) {
-                    bedModal.style.display = 'none';
-                }
-                if(e.target === staffModal) {
-                    staffModal.style.display = 'none';
+                if(e.target.classList.contains('form-modal')) {
+                    e.target.style.display = 'none';
                 }
             });
         }
 
         // Edit bed (sample function)
         function editBed(index) {
-            alert(`Editing bed ${bedData[index].number} in ${bedData[index].ward} ward`);
+            const bed = bedData[index];
+            document.getElementById('bedWard').value = bed.ward;
+            document.getElementById('bedNumber').value = bed.number;
+            document.getElementById('bedType').value = bed.type;
+            document.getElementById('bedStatus').value = bed.status;
+            document.getElementById('patientName').value = bed.patient || '';
+            document.getElementById('admissionDate').value = bed.admissionDate || '';
+            
+            if(bed.status === 'Occupied') {
+                document.getElementById('patientInfoGroup').style.display = 'block';
+                document.getElementById('admissionDateGroup').style.display = 'block';
+            }
+            
+            document.getElementById('bedModal').style.display = 'flex';
+            
+            // In a real app, we would update the form submit handler to edit instead of add
+            alert('In a complete implementation, this would open the edit form for bed ' + bed.number);
         }
 
-        // Delete bed (sample function)
+        // Delete bed
         function deleteBed(index) {
             if(confirm(`Are you sure you want to delete bed ${bedData[index].number}?`)) {
                 bedData.splice(index, 1);
@@ -535,14 +1231,23 @@
 
         // Edit staff (sample function)
         function editStaff(index) {
-            alert(`Editing staff member ${staffData[index].name}`);
+            const staff = staffData[index];
+            alert('In a complete implementation, this would open the edit form for ' + staff.name);
         }
 
-        // Delete staff (sample function)
+        // Delete staff
         function deleteStaff(index) {
             if(confirm(`Are you sure you want to delete ${staffData[index].name}?`)) {
                 staffData.splice(index, 1);
                 renderStaffTable();
+            }
+        }
+
+        // Delete treatment
+        function deleteTreatment(index) {
+            if(confirm(`Are you sure you want to delete ${treatmentsData[index].name}?`)) {
+                treatmentsData.splice(index, 1);
+                renderTreatments();
             }
         }
 

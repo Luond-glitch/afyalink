@@ -1,5 +1,5 @@
-  :root {
-            --primary-blue: #005b96;
+ :root {
+        --primary-blue: #005b96;
             --secondary-blue: #1a7bb8;
             --accent-teal: #00b4d8;
             --dark-blue: #03396c;
@@ -7,6 +7,7 @@
             --white: #ffffff;
             --error-red: #ff3333;
             --success-green: #4bb543;
+            --warning-orange: #ff9800;
         }
 
         * {
@@ -38,8 +39,8 @@
             z-index: -1;
         }
 
-        /* Login Page Styles */
-        .login-container {
+        /* Auth Container */
+        .auth-container {
             display: flex;
             justify-content: center;
             align-items: center;
@@ -47,18 +48,18 @@
             padding: 2rem;
         }
 
-        .login-box {
+        .auth-box {
             background-color: rgba(255, 255, 255, 0.95);
             border-radius: 10px;
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
             width: 100%;
-            max-width: 450px;
+            max-width: 500px;
             padding: 2.5rem;
             position: relative;
             overflow: hidden;
         }
 
-        .login-box::before {
+        .auth-box::before {
             content: '';
             position: absolute;
             top: 0;
@@ -68,22 +69,22 @@
             background: linear-gradient(90deg, var(--accent-teal), var(--primary-blue));
         }
 
-        .login-header {
+        .auth-header {
             text-align: center;
             margin-bottom: 2rem;
         }
 
-        .login-header h1 {
+        .auth-header h1 {
             color: var(--primary-blue);
             margin-bottom: 0.5rem;
             font-size: 2rem;
         }
 
-        .login-header p {
+        .auth-header p {
             color: #666;
         }
 
-        .login-logo {
+        .auth-logo {
             width: 80px;
             height: 80px;
             margin: 0 auto 1rem;
@@ -108,7 +109,7 @@
             font-weight: 500;
         }
 
-        .form-group input {
+        .form-group input, .form-group select {
             width: 100%;
             padding: 0.9rem 1rem;
             border: 1px solid #ddd;
@@ -117,7 +118,7 @@
             transition: all 0.3s ease;
         }
 
-        .form-group input:focus {
+        .form-group input:focus, .form-group select:focus {
             border-color: var(--accent-teal);
             outline: none;
             box-shadow: 0 0 0 3px rgba(0, 180, 216, 0.2);
@@ -144,15 +145,31 @@
             transform: translateY(-2px);
         }
 
-        .forgot-password {
-            text-align: center;
-            margin-top: 1rem;
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--primary-blue);
+            border: 1px solid var(--primary-blue);
+            margin-top: 0.5rem;
         }
 
-        .forgot-password a {
+        .btn-secondary:hover {
+            background-color: rgba(0, 91, 150, 0.1);
+        }
+
+        .auth-footer {
+            text-align: center;
+            margin-top: 1.5rem;
+            font-size: 0.9rem;
+        }
+
+        .auth-footer a {
             color: var(--primary-blue);
             text-decoration: none;
-            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .auth-footer a:hover {
+            text-decoration: underline;
         }
 
         /* Dashboard Styles */
@@ -162,13 +179,14 @@
         }
 
         .sidebar {
-            width: 250px;
+            width: 280px;
             background-color: var(--dark-blue);
             color: white;
             position: fixed;
-            height: 100vh;
+            height: 70vh;
             padding: 1.5rem 0;
             transition: all 0.3s ease;
+            z-index: 100;
         }
 
         .sidebar-header {
@@ -209,10 +227,11 @@
         }
 
         .main-content {
-            margin-left: 250px;
+            margin-left: 280px;
             padding: 2rem;
             background-color: #f5f7fa;
             min-height: 100vh;
+            transition: all 0.3s ease;
         }
 
         .header {
@@ -222,6 +241,15 @@
             margin-bottom: 2rem;
             padding-bottom: 1rem;
             border-bottom: 1px solid #ddd;
+        }
+
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--dark-blue);
+            cursor: pointer;
         }
 
         .user-profile {
@@ -299,6 +327,10 @@
 
         .bg-green {
             background-color: var(--success-green);
+        }
+
+        .bg-orange {
+            background-color: var(--warning-orange);
         }
 
         .card-value {
@@ -384,6 +416,11 @@
             color: #721c24;
         }
 
+        .badge-info {
+            background-color: #d1ecf1;
+            color: #0c5460;
+        }
+
         .form-modal {
             display: none;
             position: fixed;
@@ -401,10 +438,12 @@
             background-color: white;
             border-radius: 8px;
             width: 90%;
-            max-width: 600px;
+            max-width: 700px;
             padding: 2rem;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
             position: relative;
+            max-height: 90vh;
+            overflow-y: auto;
         }
 
         .close-modal {
@@ -426,20 +465,147 @@
             flex: 1;
         }
 
+        .time-inputs {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .treatment-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .treatment-item button {
+            background: none;
+            border: none;
+            color: var(--error-red);
+            cursor: pointer;
+        }
+
+        .add-treatment {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .add-treatment input {
+            flex: 1;
+        }
+
+        /* Calendar Styles */
+        .calendar {
+            margin-top: 1rem;
+        }
+
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .calendar-nav {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .calendar-nav button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.2rem;
+            color: var(--primary-blue);
+        }
+
+        .calendar-month {
+            font-weight: 600;
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 0.5rem;
+        }
+
+        .calendar-day-header {
+            text-align: center;
+            font-weight: 600;
+            padding: 0.5rem;
+            color: var(--dark-blue);
+        }
+
+        .calendar-day {
+            aspect-ratio: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 0.5rem;
+            border-radius: 5px;
+            background-color: #f8f9fa;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .calendar-day:hover {
+            background-color: #e9ecef;
+        }
+
+        .calendar-day.empty {
+            background-color: transparent;
+            cursor: default;
+        }
+
+        .calendar-day.today {
+            background-color: var(--accent-teal);
+            color: white;
+            font-weight: 600;
+        }
+
+        .calendar-day.selected {
+            background-color: var(--primary-blue);
+            color: white;
+            font-weight: 600;
+        }
+
+        .calendar-day-number {
+            font-size: 0.9rem;
+            margin-bottom: 0.2rem;
+        }
+
+        .calendar-day-events {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 0.2rem;
+        }
+
+        .calendar-event {
+            font-size: 0.6rem;
+            padding: 0.1rem 0.2rem;
+            background-color: var(--light-blue);
+            border-radius: 3px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
         /* Responsive Styles */
         @media (max-width: 992px) {
             .sidebar {
-                width: 220px;
+                width: 250px;
             }
             .main-content {
-                margin-left: 220px;
+                margin-left: 250px;
             }
         }
 
         @media (max-width: 768px) {
             .sidebar {
                 transform: translateX(-100%);
-                z-index: 100;
             }
             .sidebar.active {
                 transform: translateX(0);
@@ -450,15 +616,29 @@
             .menu-toggle {
                 display: block;
             }
-        }
-
-        @media (max-width: 576px) {
-            .login-box {
-                padding: 1.5rem;
-            }
             .form-row {
                 flex-direction: column;
                 gap: 0;
             }
+            .time-inputs {
+                flex-direction: column;
+                align-items: flex-start;
+            }
         }
- 
+
+        @media (max-width: 576px) {
+            .auth-box {
+                padding: 1.5rem;
+            }
+            .cards-container {
+                grid-template-columns: 1fr;
+            }
+            .calendar-day-number {
+                font-size: 0.8rem;
+            }
+            .calendar-event {
+                font-size: 0.5rem;
+            }
+            
+        }
+   
